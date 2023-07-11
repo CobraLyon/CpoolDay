@@ -40,9 +40,7 @@ $$ |  $$\ $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |$$ |  $$ |$$  __$$ |$$ |  $$ |      
             self.shellPrint(Fore.RESET)
             self.shellPrint('=' * self.winSize.columns)
             self.shellPrint(f'[{bin}]')
-            for test in tests:
-                self.printDict(test)
-
+            self.printDict(tests)
 
     @staticmethod
     def shellPrint(Prompt: str) -> None:
@@ -50,7 +48,7 @@ $$ |  $$\ $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |$$ |  $$ |$$  __$$ |$$ |  $$ |      
 
     def printDict(self, dict: Dict) -> None:
         for key, value in dict.items():
-            self.shellPrint((Fore.RED if value == 'KO' else Fore.GREEN) + f'{key}: {value}')
+            self.shellPrint((Fore.RED if 'KO' in value else Fore.GREEN) + f'{key}: {value}')
 
 parser = argparse.ArgumentParser(description="Script de parsing d'arguments")
 group = parser.add_mutually_exclusive_group(required=True)
