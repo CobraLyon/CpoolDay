@@ -40,7 +40,9 @@ $$ |  $$\ $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |$$ |  $$ |$$  __$$ |$$ |  $$ |      
             self.shellPrint(Fore.RESET)
             self.shellPrint('=' * self.winSize.columns)
             self.shellPrint(f'[{bin}]')
-            self.printDict(tests)
+            for test in tests:
+                self.printDict(test)
+
 
     @staticmethod
     def shellPrint(Prompt: str) -> None:
