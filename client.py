@@ -1,6 +1,7 @@
 import argparse, requests, os, sys, time, random
 from colorama import Fore
 from typing import Dict, List
+from requests import HTTPError
 
 ##config
 TestMandatorys: List[str] = ['compilation', 'tests']
@@ -8,8 +9,8 @@ TestMandatorys: List[str] = ['compilation', 'tests']
 class TraceParser:
     def __init__(self, Trace) -> None:
         self.winSize = os.get_terminal_size()
-        self.Trace: Dict = Trace
-        if not isinstance(Trace, Dict):
+        self.Trace: Dict = Trace[len(Trace) - 1]
+        if not isinstance(Trace, List):
             raise ValueError('Trace is not Valid')
         for mandatory in TestMandatorys:
             if not mandatory in  self.Trace.keys():
@@ -58,6 +59,12 @@ group.add_argument("--result", action="store_true", help="Effectue l'action de r
 args = parser.parse_args()
 
 if args.register:
-    TraceParser.shellPrint(requests.post(f'http://193.70.40.62:5000/register/{input("give your git username: ")}', timeout=10).json())
+    try:
+        TraceParser.shellPrint(requests.post(f'http://193.70.40.62:5000/register/{input("give your git username: ")}', timeout=10).json())
+    except Exception as e:
+        print('Error:', str(e))
 elif args.result:
-    TraceParser(requests.get(f'http://193.70.40.62:5000/mouli/{input("give your git username: ")}', timeout=10).json())
+    try:
+        TraceParser(requests.get(f'http://193.70.40.62:5000/mouli/{input("give your git username: ")}', timeout=10).json())
+    except Exception as e:
+        print('Error:', str(e))
